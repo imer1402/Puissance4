@@ -1,5 +1,4 @@
 package business;
 
-public class Puissance4Exception extends {
-
+public class Puissance4 {
 }
