@@ -1,4 +1,4 @@
-package Business;
+package business;
 
 public class Config {
     public static final int NB_LIGNES = 6;

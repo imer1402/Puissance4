@@ -1,4 +1,4 @@
-package Business;
+package business;
 
 public final class Joueur {
     private final Couleur nom; // Champ final pour garantir l'immuabilité

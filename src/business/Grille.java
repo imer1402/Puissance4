@@ -1,4 +1,4 @@
-package Business;
+package business;
 
 public class Grille {
     private static final int NB_LIGNES = Config.NB_LIGNES;
