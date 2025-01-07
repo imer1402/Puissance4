@@ -1,18 +1,17 @@
 package business;
 
 /**
- * La classe Grille représente une grille de jeu composée de Jetons.
- * Elle permet de gérer les opérations liées à une grille de Puissance 4.
+ * Classe représentant une grille de jeu pour le Puissance 4.
  */
 public class Grille {
 
     /**
-     * Nombre de lignes dans la grille, défini par la classe Config.
+     * Nombre de lignes dans la grille.
      */
     public static final int NB_LIGNES = Config.NB_LIGNES;
 
     /**
-     * Nombre de colonnes dans la grille, défini par la classe Config.
+     * Nombre de colonnes dans la grille.
      */
     public static final int NB_COLONNES = Config.NB_COLONNES;
 
@@ -22,8 +21,7 @@ public class Grille {
     private final Jeton[][] plateauJetons;
 
     /**
-     * Constructeur par défaut.
-     * Crée une grille vide avec les dimensions NB_LIGNES x NB_COLONNES.
+     * Constructeur par défaut : crée une grille vide.
      */
     public Grille() {
         this.plateauJetons = new Jeton[NB_LIGNES][NB_COLONNES];
@@ -31,10 +29,10 @@ public class Grille {
 
     /**
      * Constructeur avec un plateau initial.
-     * @param plateauJetons Le tableau 2D de Jetons pour initialiser la grille.
-     * @throws Puissance4Exception Si le tableau est null ou invalide.
+     * @param plateauJetons Le tableau de Jetons pour initialiser la grille.
+     * @throws Puissance4Exception Si le tableau est invalide.
      */
-    public Grille(Jeton[][] plateauJetons) {
+    public Grille(Jeton[][] plateauJetons) throws Puissance4Exception {
         if (plateauJetons == null || plateauJetons.length != NB_LIGNES || plateauJetons[0].length != NB_COLONNES) {
             throw new Puissance4Exception("Le plateau fourni est invalide.");
         }
@@ -42,10 +40,9 @@ public class Grille {
     }
 
     /**
-     * Retourne le Jeton à une position donnée.
-     * @param position La position dans la grille.
-     * @return Le Jeton à la position donnée, ou null si la case est vide.
-     * @throws IllegalArgumentException Si la position est invalide.
+     * Retourne le Jeton à une position donnée ou null si la case est vide.
+     * @param position La position à vérifier.
+     * @return Le Jeton à la position donnée ou null.
      */
     public Jeton getJeton(Position position) {
         if (position == null || position.getLigne() < 0 || position.getLigne() >= NB_LIGNES
@@ -56,10 +53,9 @@ public class Grille {
     }
 
     /**
-     * Vérifie si une colonne est remplie.
-     * @param numColonne Le numéro de la colonne (0-indexé).
-     * @return true si la colonne est remplie, sinon false.
-     * @throws IllegalArgumentException Si le numéro de colonne est invalide.
+     * Vérifie si une colonne est pleine.
+     * @param numColonne Le numéro de la colonne à vérifier.
+     * @return true si la colonne est pleine, sinon false.
      */
     public boolean isFullColonne(int numColonne) {
         if (numColonne < 0 || numColonne >= NB_COLONNES) {
@@ -71,12 +67,11 @@ public class Grille {
     /**
      * Insère un Jeton dans une colonne donnée.
      * @param jeton Le Jeton à insérer.
-     * @param numColonne Le numéro de la colonne (0-indexé).
-     * @return L'indice de la ligne où le Jeton a été inséré.
-     * @throws IllegalArgumentException Si le numéro de colonne est invalide.
-     * @throws Puissance4Exception Si la colonne est déjà remplie.
+     * @param numColonne Le numéro de la colonne.
+     * @return La ligne où le Jeton a été inséré.
+     * @throws Puissance4Exception Si la colonne est pleine.
      */
-    public int insererJeton(Jeton jeton, int numColonne) {
+    public int insererJeton(Jeton jeton, int numColonne) throws Puissance4Exception {
         if (numColonne < 0 || numColonne >= NB_COLONNES) {
             throw new IllegalArgumentException("Numéro de colonne invalide : " + numColonne);
         }
@@ -90,7 +85,7 @@ public class Grille {
     }
 
     /**
-     * Vérifie si la grille est complètement remplie.
+     * Vérifie si la grille est entièrement remplie.
      * @return true si la grille est pleine, sinon false.
      */
     public boolean isFullGrille() {
@@ -106,7 +101,6 @@ public class Grille {
      * Vérifie s'il existe un alignement de 4 jetons passant par une position donnée.
      * @param position La position de départ.
      * @return true si un alignement est trouvé, sinon false.
-     * @throws IllegalArgumentException Si la position est invalide.
      */
     public boolean alignementRealise(Position position) {
         if (position == null || position.getLigne() < 0 || position.getLigne() >= NB_LIGNES
@@ -125,9 +119,9 @@ public class Grille {
     }
 
     /**
-     * Retourne le nombre de jetons alignés horizontalement avec la même couleur.
+     * Retourne le nombre de jetons alignés horizontalement.
      * @param position La position de départ.
-     * @param jeton Le jeton à comparer.
+     * @param jeton Le Jeton à vérifier.
      * @return Le nombre de jetons alignés horizontalement.
      */
     private int alignementHorizontal(Position position, Jeton jeton) {
@@ -135,12 +129,10 @@ public class Grille {
         int colonne = position.getColonne();
         int nbAlignes = 1;
 
-        // À gauche
         for (int j = colonne - 1; j >= 0 && plateauJetons[ligne][j] == jeton; j--) {
             nbAlignes++;
         }
 
-        // À droite
         for (int j = colonne + 1; j < NB_COLONNES && plateauJetons[ligne][j] == jeton; j++) {
             nbAlignes++;
         }
@@ -149,9 +141,9 @@ public class Grille {
     }
 
     /**
-     * Retourne le nombre de jetons alignés verticalement avec la même couleur.
+     * Retourne le nombre de jetons alignés verticalement.
      * @param position La position de départ.
-     * @param jeton Le jeton à comparer.
+     * @param jeton Le Jeton à vérifier.
      * @return Le nombre de jetons alignés verticalement.
      */
     private int alignementVertical(Position position, Jeton jeton) {
@@ -159,7 +151,6 @@ public class Grille {
         int colonne = position.getColonne();
         int nbAlignes = 1;
 
-        // Vers le bas
         for (int i = ligne + 1; i < NB_LIGNES && plateauJetons[i][colonne] == jeton; i++) {
             nbAlignes++;
         }
@@ -168,19 +159,51 @@ public class Grille {
     }
 
     /**
-     * Retourne le nombre de jetons alignés diagonalement avec la même couleur.
+     * Retourne le nombre de jetons alignés diagonalement.
      * @param position La position de départ.
-     * @param jeton Le jeton à comparer.
-     * @return Le nombre de jetons alignés diagonalement.
+     * @param jeton Le Jeton à vérifier.
+     * @return Le nombre maximum de jetons alignés diagonalement.
      */
     private int alignementDiagonale(Position position, Jeton jeton) {
-        return alignementDiagonal(position, jeton, -1, -1) + alignementDiagonal(position, jeton, 1, 1) - 1 ||
-                alignementDiagonal(position, jeton, -1, 1) + alignementDiagonal(position, jeton, 1, -1) - 1;
+        return Math.max(alignementDiagonal(position, jeton, -1, -1) + alignementDiagonal(position, jeton, 1, 1) - 1,
+                alignementDiagonal(position, jeton, -1, 1) + alignementDiagonal(position, jeton, 1, -1) - 1);
     }
 
+    /**
+     * Retourne le nombre de jetons alignés dans une direction diagonale spécifique.
+     * @param position La position de départ.
+     * @param jeton Le Jeton à vérifier.
+     * @param deltaX Direction verticale.
+     * @param deltaY Direction horizontale.
+     * @return Le nombre de jetons alignés dans cette diagonale.
+     */
     private int alignementDiagonal(Position position, Jeton jeton, int deltaX, int deltaY) {
-        int nbAlignes = 0;
+        int nbAlignes = 1;
         int ligne = position.getLigne();
         int colonne = position.getColonne();
 
-        for (int i = 0; i < NB_LIGNES && grille
+        for (int i = 1; i < 4; i++) {
+            int newLigne = ligne + i * deltaX;
+            int newColonne = colonne + i * deltaY;
+            if (newLigne >= 0 && newLigne < NB_LIGNES && newColonne >= 0 && newColonne < NB_COLONNES
+                    && plateauJetons[newLigne][newColonne] == jeton) {
+                nbAlignes++;
+            } else {
+                break;
+            }
+        }
+
+        for (int i = 1; i < 4; i++) {
+            int newLigne = ligne - i * deltaX;
+            int newColonne = colonne - i * deltaY;
+            if (newLigne >= 0 && newLigne < NB_LIGNES && newColonne >= 0 && newColonne < NB_COLONNES
+                    && plateauJetons[newLigne][newColonne] == jeton) {
+                nbAlignes++;
+            } else {
+                break;
+            }
+        }
+
+        return nbAlignes;
+    }
+}

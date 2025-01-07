@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>edu.eafc.Puissance4</groupId> <!-- Modifie selon ton projet -->
+    <groupId>Puissance4</groupId> <!-- Modifie selon ton projet -->
     <artifactId>Puissance4</artifactId> <!-- Nom de ton projet -->
     <version>1.0-SNAPSHOT</version>
 
