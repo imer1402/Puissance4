@@ -12,7 +12,6 @@ public class Puissance4Exception extends Exception {
      * Le numéro de colonne ou autre contexte lié à l'exception.
      */
     private final int colonne;
-
     /**
      * Constructeur par défaut pour Puissance4Exception.
      */
